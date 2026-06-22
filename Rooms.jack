@@ -1,0 +1,142 @@
+
+
+
+
+
+
+
+class Rooms {
+    static int mdl_stride;
+    static int rooms_addr_begin;
+
+
+    static int room_addr;
+
+    static int mdl_count;
+    static int mdl_local;
+
+    static int prt_count;
+    static int prt_local;
+
+    function void init(int roomsStartAddr, int modelSize) {
+        let rooms_addr_begin = roomsStartAddr;
+        let mdl_stride = modelSize;
+        let room_addr = rooms_addr_begin;
+
+        return;
+    }
+
+    function int newRoom(int x_min, int x_max, int y_min, int y_max, int z_min, int z_max) {
+        var int room_start;
+        let room_start = room_addr;
+
+
+        do Memory.poke(room_addr, x_min); 
+ do Memory.poke(room_addr+1, x_max);
+        do Memory.poke(room_addr + 2, y_min); 
+ do Memory.poke(room_addr + 2 +1, y_max);
+        do Memory.poke(room_addr + 4, z_min); 
+ do Memory.poke(room_addr + 4 +1, z_max);
+
+
+        let room_addr = room_addr + 6;
+
+
+        let mdl_local = room_addr + 1;
+
+        let mdl_count = 0;
+        let prt_count = 0;
+
+
+        return room_start;
+    }
+
+    function void addModel(int mdl_addr) {
+        do Memory.poke(mdl_local, mdl_addr);
+        let mdl_local = mdl_local + 1;
+        let mdl_count = mdl_count + 1;
+
+        return;
+    }
+
+    function void addModels(int mdl_addr_begin, int mdl_addr_end) {
+        var int mdl_addr;
+        let mdl_addr = mdl_addr_begin;
+        while(mdl_addr < mdl_addr_end) {
+            do Rooms.addModel(mdl_addr);
+            let mdl_addr = mdl_addr + mdl_stride;
+        }
+
+        return;
+    }
+
+    function void finalizeModels() {
+
+        do Memory.poke(room_addr, mdl_count);
+
+
+        let room_addr = room_addr + 1 + mdl_count;
+
+
+        let prt_local = room_addr + 1;
+        return;
+    }
+
+
+
+
+
+    function int addPortal(int x_tr, int y_tr, int z_tr, int x_bl, int y_bl, int z_bl, int x_normal, int y_normal, int z_normal, int otherRoomAddr,
+        int outbuf3d) {
+        do Memory.poke(prt_local, x_tr); 
+ do Memory.poke(prt_local+1, y_tr); 
+ do Memory.poke(prt_local+2, z_tr);
+        do Memory.poke(prt_local + 3, x_bl); 
+ do Memory.poke(prt_local + 3 +1, y_bl); 
+ do Memory.poke(prt_local + 3 +2, z_tr);
+        do Memory.poke(prt_local + 6, x_normal); 
+ do Memory.poke(prt_local + 6 +1, y_normal); 
+ do Memory.poke(prt_local + 6 +2, z_normal);
+        do Memory.poke(prt_local + 9, otherRoomAddr);
+        do Memory.poke(prt_local + 10, outbuf3d);
+
+        let prt_local = prt_local + 11;
+        let prt_count = prt_count + 1;
+
+
+        return outbuf3d + 12;
+    }
+
+
+    function int finalizePortals() {
+
+        do Memory.poke(room_addr, prt_count);
+
+
+        let room_addr = prt_local;
+        return room_addr;
+    }
+
+    function void setPortalOf(int roomAddr, int portalInd, int otherRoomAddr) {
+        var int room_current;
+        var int mdl_count_current;
+        var int prt_count_current;
+
+        let room_current = roomAddr + 6;
+        let mdl_count_current = Memory.peek(room_current);
+
+        let room_current = room_current + 1 + mdl_count_current;
+        let prt_count_current = Memory.peek(room_current);
+
+        let room_current = room_current + 1 + (11 * portalInd);
+
+        if(portalInd < prt_count_current) {
+            let room_current = room_current + 9;
+            do Memory.poke(room_current, otherRoomAddr);
+        } else {
+            do Sys.error(1001);
+        }
+
+        return;
+    }
+}

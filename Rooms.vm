@@ -1,0 +1,257 @@
+function Rooms.init 0
+push argument 0
+pop static 1
+push argument 1
+pop static 0
+push static 1
+pop static 2
+push constant 0
+return
+function Rooms.newRoom 1
+push static 2
+pop local 0
+push static 2
+push argument 0
+call Memory.poke 2
+pop temp 0
+push static 2
+push constant 1
+add
+push argument 1
+call Memory.poke 2
+pop temp 0
+push static 2
+push constant 2
+add
+push argument 2
+call Memory.poke 2
+pop temp 0
+push static 2
+push constant 2
+add
+push constant 1
+add
+push argument 3
+call Memory.poke 2
+pop temp 0
+push static 2
+push constant 4
+add
+push argument 4
+call Memory.poke 2
+pop temp 0
+push static 2
+push constant 4
+add
+push constant 1
+add
+push argument 5
+call Memory.poke 2
+pop temp 0
+push static 2
+push constant 6
+add
+pop static 2
+push static 2
+push constant 1
+add
+pop static 4
+push constant 0
+pop static 3
+push constant 0
+pop static 5
+push local 0
+return
+function Rooms.addModel 0
+push static 4
+push argument 0
+call Memory.poke 2
+pop temp 0
+push static 4
+push constant 1
+add
+pop static 4
+push static 3
+push constant 1
+add
+pop static 3
+push constant 0
+return
+function Rooms.addModels 1
+push argument 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push argument 1
+lt
+not
+if-goto WHILE_END0
+push local 0
+call Rooms.addModel 1
+pop temp 0
+push local 0
+push static 0
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Rooms.finalizeModels 0
+push static 2
+push static 3
+call Memory.poke 2
+pop temp 0
+push static 2
+push constant 1
+add
+push static 3
+add
+pop static 2
+push static 2
+push constant 1
+add
+pop static 6
+push constant 0
+return
+function Rooms.addPortal 0
+push static 6
+push argument 0
+call Memory.poke 2
+pop temp 0
+push static 6
+push constant 1
+add
+push argument 1
+call Memory.poke 2
+pop temp 0
+push static 6
+push constant 2
+add
+push argument 2
+call Memory.poke 2
+pop temp 0
+push static 6
+push constant 3
+add
+push argument 3
+call Memory.poke 2
+pop temp 0
+push static 6
+push constant 3
+add
+push constant 1
+add
+push argument 4
+call Memory.poke 2
+pop temp 0
+push static 6
+push constant 3
+add
+push constant 2
+add
+push argument 2
+call Memory.poke 2
+pop temp 0
+push static 6
+push constant 6
+add
+push argument 6
+call Memory.poke 2
+pop temp 0
+push static 6
+push constant 6
+add
+push constant 1
+add
+push argument 7
+call Memory.poke 2
+pop temp 0
+push static 6
+push constant 6
+add
+push constant 2
+add
+push argument 8
+call Memory.poke 2
+pop temp 0
+push static 6
+push constant 9
+add
+push argument 9
+call Memory.poke 2
+pop temp 0
+push static 6
+push constant 10
+add
+push argument 10
+call Memory.poke 2
+pop temp 0
+push static 6
+push constant 11
+add
+pop static 6
+push static 5
+push constant 1
+add
+pop static 5
+push argument 10
+push constant 12
+add
+return
+function Rooms.finalizePortals 0
+push static 2
+push static 5
+call Memory.poke 2
+pop temp 0
+push static 6
+pop static 2
+push static 2
+return
+function Rooms.setPortalOf 3
+push argument 0
+push constant 6
+add
+pop local 0
+push local 0
+call Memory.peek 1
+pop local 1
+push local 0
+push constant 1
+add
+push local 1
+add
+pop local 0
+push local 0
+call Memory.peek 1
+pop local 2
+push local 0
+push constant 1
+add
+push constant 11
+push argument 1
+call Math.multiply 2
+add
+pop local 0
+push argument 1
+push local 2
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push constant 9
+add
+pop local 0
+push local 0
+push argument 2
+call Memory.poke 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push constant 1001
+call Sys.error 1
+pop temp 0
+label IF_END0
+push constant 0
+return

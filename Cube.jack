@@ -1,0 +1,152 @@
+
+
+
+
+
+
+
+class Cube {
+
+
+
+
+
+
+    function int model(int startAddr, int outbuf3d, int x, int y, int z, int xScale, int yScale, int zScale) {
+        do Memory.poke(startAddr, 1);
+        do Memory.poke(startAddr + 1, xScale); 
+ do Memory.poke(startAddr + 1 +1, yScale); 
+ do Memory.poke(startAddr + 1 +2, zScale);
+        do Memory.poke(startAddr + 4, x); 
+ do Memory.poke(startAddr + 4 +1, y); 
+ do Memory.poke(startAddr + 4 +2, z);
+        do Memory.poke(startAddr + 7, outbuf3d);
+
+        return startAddr + 8;
+    }
+
+
+
+
+    function int faces(int startAddr) {
+        var int stride;
+        let stride = 7;
+
+        do Memory.poke(startAddr, 0); 
+ do Memory.poke(startAddr+1, 1); 
+ do Memory.poke(startAddr+2, 2); 
+ do Memory.poke(startAddr+3, 3);
+        do Memory.poke(startAddr + 4, 0); 
+ do Memory.poke(startAddr + 4 +1, -1); 
+ do Memory.poke(startAddr + 4 +2, 0);
+        let startAddr = startAddr + stride;
+
+        do Memory.poke(startAddr, 0); 
+ do Memory.poke(startAddr+1, 7); 
+ do Memory.poke(startAddr+2, 8); 
+ do Memory.poke(startAddr+3, 4);
+        do Memory.poke(startAddr + 4, 0); 
+ do Memory.poke(startAddr + 4 +1, 0); 
+ do Memory.poke(startAddr + 4 +2, -1);
+        let startAddr = startAddr + stride;
+
+        do Memory.poke(startAddr, 3); 
+ do Memory.poke(startAddr+1, 4); 
+ do Memory.poke(startAddr+2, 11); 
+ do Memory.poke(startAddr+3, 5);
+        do Memory.poke(startAddr + 4, -1); 
+ do Memory.poke(startAddr + 4 +1, 0); 
+ do Memory.poke(startAddr + 4 +2, 0);
+        let startAddr = startAddr + stride;
+
+        do Memory.poke(startAddr, 2); 
+ do Memory.poke(startAddr+1, 5); 
+ do Memory.poke(startAddr+2, 10); 
+ do Memory.poke(startAddr+3, 6);
+        do Memory.poke(startAddr + 4, 0); 
+ do Memory.poke(startAddr + 4 +1, 0); 
+ do Memory.poke(startAddr + 4 +2, 1);
+        let startAddr = startAddr + stride;
+
+        do Memory.poke(startAddr, 1); 
+ do Memory.poke(startAddr+1, 6); 
+ do Memory.poke(startAddr+2, 9); 
+ do Memory.poke(startAddr+3, 7);
+        do Memory.poke(startAddr + 4, 1); 
+ do Memory.poke(startAddr + 4 +1, 0); 
+ do Memory.poke(startAddr + 4 +2, 0);
+        let startAddr = startAddr + stride;
+
+        do Memory.poke(startAddr, 8); 
+ do Memory.poke(startAddr+1, 9); 
+ do Memory.poke(startAddr+2, 10); 
+ do Memory.poke(startAddr+3, 11);
+        do Memory.poke(startAddr + 4, 0); 
+ do Memory.poke(startAddr + 4 +1, 1); 
+ do Memory.poke(startAddr + 4 +2, 0);
+        let startAddr = startAddr + stride;
+
+        return startAddr;
+    }
+
+    function int edges(int startAddr) {
+        do Memory.poke(startAddr, 0); 
+ do Memory.poke(startAddr+1, 1);
+        do Memory.poke(startAddr + 2, 1); 
+ do Memory.poke(startAddr + 2 +1, 3);
+        do Memory.poke(startAddr + 4, 3); 
+ do Memory.poke(startAddr + 4 +1, 2);
+        do Memory.poke(startAddr + 6, 2); 
+ do Memory.poke(startAddr + 6 +1, 0);
+
+        do Memory.poke(startAddr + 8, 0); 
+ do Memory.poke(startAddr + 8 +1, 4);
+        do Memory.poke(startAddr + 10, 2); 
+ do Memory.poke(startAddr + 10 +1, 6);
+        do Memory.poke(startAddr + 12, 3); 
+ do Memory.poke(startAddr + 12 +1, 7);
+        do Memory.poke(startAddr + 14, 1); 
+ do Memory.poke(startAddr + 14 +1, 5);
+
+        do Memory.poke(startAddr + 16, 4); 
+ do Memory.poke(startAddr + 16 +1, 5);
+        do Memory.poke(startAddr + 18, 5); 
+ do Memory.poke(startAddr + 18 +1, 7);
+        do Memory.poke(startAddr + 20, 7); 
+ do Memory.poke(startAddr + 20 +1, 6);
+        do Memory.poke(startAddr + 22, 6); 
+ do Memory.poke(startAddr + 22 +1, 4);
+
+        return startAddr + 24;
+    }
+
+    function int vertices(int startAddr) {
+        do Memory.poke(startAddr, 0); 
+ do Memory.poke(startAddr+1, 0); 
+ do Memory.poke(startAddr+2, 0);
+        do Memory.poke(startAddr+3, 1); 
+ do Memory.poke(startAddr+3 +1, 0); 
+ do Memory.poke(startAddr+3 +2, 0);
+        do Memory.poke(startAddr+6, 0); 
+ do Memory.poke(startAddr+6 +1, 0); 
+ do Memory.poke(startAddr+6 +2, 1);
+        do Memory.poke(startAddr+9, 1); 
+ do Memory.poke(startAddr+9 +1, 0); 
+ do Memory.poke(startAddr+9 +2, 1);
+
+        do Memory.poke(startAddr+12, 0); 
+ do Memory.poke(startAddr+12 +1, 1); 
+ do Memory.poke(startAddr+12 +2, 0);
+        do Memory.poke(startAddr+15, 1); 
+ do Memory.poke(startAddr+15 +1, 1); 
+ do Memory.poke(startAddr+15 +2, 0);
+        do Memory.poke(startAddr+18, 0); 
+ do Memory.poke(startAddr+18 +1, 1); 
+ do Memory.poke(startAddr+18 +2, 1);
+        do Memory.poke(startAddr+21, 1); 
+ do Memory.poke(startAddr+21 +1, 1); 
+ do Memory.poke(startAddr+21 +2, 1);
+
+        return startAddr + 24;
+    }
+}
