@@ -1,6 +1,7 @@
 ### 3d demo for the Hack computer
 
 A demo showcasing edge-based 3d rendering with backface culling and a visibility system with rooms and portals.
+Can be compiled using `process.sh`
 
 As a uni project it had to be written in the original Jack language, so it uses a lot of C preprocessor macros
 to avoid function calls. It also avoids using array and directly calls Memory.peek and poke.
